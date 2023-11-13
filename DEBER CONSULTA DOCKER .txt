@@ -1,0 +1,314 @@
+
+mi_red
+
+docker pull mariadb
+docker images
+docker pull wordpress
+docker images
+
+docker network create red_ey
+docker run -d --name servidor_mariadb \
+--network red_ey \
+-v /opt/mysql_ey:/var/lib/mysql \
+-e MYSQL_DATABASE=bd_ey \
+-e MYSQL_USER=user_ey \
+-e MYSQL_PASSWORD=asdasd \
+-e MYSQL_ROOT_PASSWORD=asdasd \
+mariadb
+
+docker run -d --name servidor_ey \
+--network red_ey \
+-v /opt/wordpress:/var/www/html/ey-content \
+-e WORDPRESS_DB_HOST=servidor_mariadb \
+-e WORDPRESS_DB_USER=user_ey \
+-e WORDPRESS_DB_PASSWORD=asdasd \
+-e WORDPRESS_DB_NAME=bd_ey \
+-p 80:80 \
+wordpress
+
+docker stop servidor_ey
+docker stop servidor_mariadb
+
+
+INSTALAMOS DOCKER COMPOSE 
+curl -L "https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
+
+chmod +x /usr/bin/docker-compose
+
+docker-compose --version
+
+docker volume create mariadb-data
+docker volume create backup-data
+
+mkdir practicadocker1
+ls
+cd practicadocker1/
+nano docker-compose.yml
+
+version: '3'
+volumes:
+  mariadb-data:
+  backup-data:
+
+services:
+  mariadb-container:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: bd_ey
+      MYSQL_USER: user_ey
+      MYSQL_PASSWORD: asdasd
+      MYSQL_ROOT_PASSWORD: asdasd
+
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+  wordpress-container:
+    image: wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb-container
+      WORDPRESS_DB_USER: user_ey
+      WORDPRESS_DB_PASSWORD: asdasd
+      WORDPRESS_DB_NAME: bd_ey
+    ports:
+      - "80:80"
+    depends_on:
+      - mariadb-container
+
+  backup-container:
+    build:
+      context: .
+      dockerfile: Dockerfile-backup
+    volumes:
+      - backup-data:/backups
+    depends_on:
+      - mariadb-container
+
+
+
+
+nano Dockerfile-backup
+
+FROM alpine:latest
+RUN apk --no-cache add mysql-client
+COPY backup-script.sh /backup-script.sh
+RUN chmod +x /backup-script.sh
+CMD ["sh", "-c", "while true; do sh /backup-script.sh; sleep 300; done"]
+
+
+nano backup-script.sh
+
+#!/bin/sh
+mysqldump -h mariadb-container -u root -p asdasd --all-databases > /backups/backup.sql
+===================================================================
+ ------levantamos los contenedores
+docker-compose up -d 
+docker ps
+PARA VERIFICAR EN EL BACKUP Y QUE SEA CADA 5 MINUTOS =======
+docker exec -it practicadocker1-backup-container-1 /bin/sh
+ls
+cd backups
+ls -l
+
+
+PARA INGRESAR A MARIA DB 
+
+docker exec -it practicadocker1-mariadb-container-1 /bin/bash
+
+mysql -u user_ey -p
+
+contrase;a  ====== asdasd
+
+      MYSQL_DATABASE: bd_ey
+      MYSQL_USER: user_ey
+      MYSQL_PASSWORD: asdasd
+      MYSQL_ROOT_PASSWORD: asdasd
+
+ingresamos a nuestro navegador y colocamos nuestra direccion ip para verificar la intslatacion ede wordpress
+
+
+http://192.168.149.131
+
+
+
+para ver si estan en la misma red 
+
+docker network ls
+
+
+para ver mis contenedores
+docker ps -a 
+
+
+detener los contenedores
+docker stop $(docker ps -q)
+
+activar los contenedores 
+docker start $(docker ps -a -q)
+
+
+INSTALCION DE KUBERNETES
+sudo dnf update
+sudo dnf install epel-release
+
+sudo dnf install snapd
+
+
+sudo ln -s /var/lib/snapd/snap /snap
+
+echo ’export PATH=$PATH:/var/lib/snapd/snap/bin’ | sudo tee -a /etc/profile.d/snap.sh source /etc
+
+
+sudo systemctl enable --now snapd.socket
+
+systemctl status snapd.socket
+
+sudo setenforce 0
+sudo sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
+
+sudo snap install microk8s --classic
+
+sudo usermod -a -G microk8s $USER
+sudo chown -f -R $USER ~/.kube
+
+
+newgrp microk8s
+
+init 6
+
+microk8s status
+
+microk8s kubectl get nodes
+
+microk8s config
+
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.21.2/bin/linux/amd64/kubectl
+
+
+sudo chmod +x kubectl
+
+
+sudo mv kubectl /usr/local/bin/
+
+
+cd $HOME
+microk8s config > ~/.kube/config
+
+kubectl get nodes
+
+
+¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
+configuracion del nodo master
+¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
+
+Incorporacion de nodos al cl´uster Microk8s
+Requisitos:
+Maquina 1 Alma Linux 9: Nodo Master
+Maquina 2 Alma Linux 9: Nodo esclavo
+En todas las m´aquinas se debe tener instalado hasta el paso anterior.
+En el nodo master, permita que los puertos requeridos pasen a traves del firewall:
+sudo firewall-cmd --add-port=25000/tcp --permanent
+sudo firewall-cmd --add-port=16443/tcp --permanent
+sudo firewall-cmd --add-port=12379/tcp --permanent
+sudo firewall-cmd --add-port=10250/tcp --permanent
+sudo firewall-cmd --add-port=10255/tcp --permanent
+sudo firewall-cmd --add-port=10257/tcp --permanent
+sudo firewall-cmd --add-port=10259/tcp --permanent
+
+sudo firewall-cmd --reload
+
+*Añada en la direccion /etc/hosts la direccion ip del nodo esclavo
+
+nano /etc/hosts
+
+192.168.149.132 localhost.localdomain
+
+*Genere el comando que utilizaran los nodos para unirse al cluster
+
+ microk8s add-node
+
+microk8s join 192.168.149.131:25000/677a4ed2fab6f6c33b3c703a93ebd228/354f3544d5d8 --worker
+
+
+¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿*****************
+configuracion del nodo esclavo
+¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿******************
+
+
+*Ahora en el nodo esclavo (M´aquina 2) despu´es de instalar Microk8s en el nodo esclavo, configuramos
+lo siguiente:
+
+export OPENSSL_CONF=/var/lib/snapd/snap/microk8s/current/etc/ssl/openssl.cnf
+sudo firewall-cmd --add-port=25000/tcp --permanent
+sudo firewall-cmd --add-port=16443/tcp --permanent
+sudo firewall-cmd --add-port=12379/tcp --permanent
+sudo firewall-cmd --add-port=10250/tcp --permanent
+sudo firewall-cmd --add-port=10255/tcp --permanent
+sudo firewall-cmd --add-port=10257/tcp --permanent
+sudo firewall-cmd --add-port=10259/tcp --permanent
+
+sudo firewall-cmd --reload
+
+Añada en la direccion /etc/hosts la direccion ip del nodo esclavo
+
+nano /etc/hosts
+
+192.168.149.131 localhost.localdomain
+
+Ahora use el comando generado en el maestro para unir los nodos al cl´uster Microk8s.
+
+microk8s join 192.168.149.131:25000/677a4ed2fab6f6c33b3c703a93ebd228/354f3544d5d8 --worker
+
+*Para comprobar  
+kubectl get nodes
+
+*para abandonar un nodo maestro 
+microk8s leave
+
+NODO MAESTRO 192.168.149.131 +++++++++++
+
+
+NODO ESCLAVO 192.168.149.132
+
+ nano ~/.kube/config
+
+
+CREE OTRA MAQUINA DE ALMA LINUX E
+ USUARIO : root
+contrase;a: edisonyugcha
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

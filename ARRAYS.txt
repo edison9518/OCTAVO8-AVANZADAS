@@ -1,0 +1,156 @@
+
+root
+david1
+
+arrays
+es una tecnologia que combina multiples discos o unidades de estado solido  en un solo conjunto para mejorar la confiabilidad la redundancia o el rendimiento del almacenamiento de datos 
+
+RAID 0  (STRIPING)
+guarda la informacion en un solo disco 
+
+
+RAID 1 (MIRRORING)
+almaenamiento en espejo en dos discos en el primer disco se guarda y el otro es el reflejo o backup 
+conocido como respaldo 
+
+
+
+RAID 5 
+tengo 4 discos alamacena la informacion en los 3 discos y si uno se da;a  
+permite reconstruir con informacion de paridad 
+se guarda en una particion la paridad guardada en cualquier disco 
+
+RAID 5E 
+reconstruye con una particion 
+
+
+
+
+RAID 6
+ TENGO 5 DISCOS Y DOS DISCOS GUARDAN LA PARIDAD
+
+
+
+RAID 10 
+es una combinacion de RAID 1 Y RAID 0
+
+
+RAID 50 Y RAID 60 
+son combinaciones de raid 5 con raid 0 dan origen a un RAID 50 
+
+
+
+
+
+CREANDO  el usuario 
+useradd prueba2
+passwd prueba2
+prueba2
+prueba2
+
+
+
+mdadm -f /dev/md0 /dev/nvme0n3pl
+
+removemos el disco 
+mdadm -r -f /dev/md0 /dev/nvme0n3pl         ////removiendoe l disco 
+cat /proc/mdstat  			////monitorear el disco 
+
+tar zcf /mnt/backup2-etc.tar.gz /etc/
+sfdisck -d /dev/nvme0n2pu | sfdisk /dev/nvme0n3p1
+
+para a;adir el nuevo disco al r
+mdadm -a /dev/md0 /dev/nvme0n3p1
+ cat /proc/mdstat
+nano /mnt/lost+found/
+ls  /mnt/			///////sacar informacion
+ 
+
+desmontar el disco +++++++++++++++++++++++++++++++++++++
+umount /dev/md0
+mdadm --stop /dev/md0
+mdadm --zero-superblock /dev/nvme0n3p1
+mdadm --zero-superblock /dev/nvme0n2p1
+
+
+cat /proc/mdstat
+lsblk
+
+
+INVESTIGAR SOBRE RAID5
+
+entrando a al vios como crear un raid 
+
+aumentar espacio en el DISCO 
+-----------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/var
+
+df -h   para ver el espacio usado 
+por que hicimos la sparticione s
+debido se guarda bajo la raiz   se debe borrar los archivos por comandos  por eso se realiza particiones asi siempre va a inivciar la maquina 
+
+apagamos la maquina 
+y a;adimos un disco para crear una particion en un disco 
+
+
+ lsblk
+fdisk /dev/nvme0n2
+n
+p
+3
+enter
+enter
+w
+
+lsblk
+fdisk -l
+init 6
+
+
+lsblk
+
+TRABAJO FINAL 
+DEBE SER ENTREGADO HASTA EL 20 DE NOVIEMBRE y revisar un trabajo 
+realizar una investigacion sobre open stak levantar la estructura routers maquinas virtuales contenedores utilizar y aprender openstack 
+ocupar una infraestructura  de red completa una red completa realizar un documento y ademas explicar como seria en forma fisica por modulos
+
+lsblk
+pwcreate /dev/nvme02p1
+vgdisplay
+vgdisplay almalinux | grep "Free"
+vgextend almalinux /dev/nvme02p1
+vgdisplay almalinux | grep "Free"
+lvextend -L+20G /dev/almalinux/var
+resize2fs /dev/almalinux/var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

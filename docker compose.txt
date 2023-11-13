@@ -1,0 +1,134 @@
+Instalar docker compose 
+
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+
+mkdir docker-wordpress
+importante para ingresar 
+
+cd docker-wordpress
+touch docker-compose.yml
+nano docker-compose.yml
+
+
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: edison
+      MYSQL_DATABASE: david
+      MYSQL_USER: david
+      MYSQL_PASSWORD: edison
+
+  wordpress:
+    image: wordpress
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_NAME: david
+      WORDPRESS_DB_USER: david
+      WORDPRESS_DB_PASSWORD: edison
+    depends_on:
+      - mariadb
+
+  backup:
+    image: alpine
+    volumes:
+      - ./backup:/backup
+    command: sh -c "while true; do tar czvf /backup/backup-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz /var/www/html; sleep 300; done"
+    depends_on:
+      - wordpress
+
+
+mkdir backup
+para arrancar los contenedores 
+
+docker-compose up -d
+
+nombres de mis contenedores!!!
+/////
+docker-wordpress-mariadb-1
+
+docker logs docker-wordpress-wordpress-1
+docker logs docker-wordpress-backup-1
+
+
+Para ingresar a mariadb y ejecutar 
+docker exec -it docker-wordpress-mariadb-1 /bin/bash
+mi usuario 
+
+mysql -h docker-wordpress-mariadb-1 -u david -p
+
+contrase;a:::: david
+
+
+comando para ver el timepo de creacion del backup
+cd backup/
+ls -l 
+
+para ver si estan en la misma red 
+
+docker network ls
+
+
+para ver mis contenedores
+docker ps -a 
+
+
+detener los contenedores
+docker stop $(docker ps -q)
+
+activar los contenedores 
+docker start $(docker ps -a -q)
+
+
+INSTALCION DE KUBERNETES
+sudo dnf update
+sudo dnf install epel-release
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

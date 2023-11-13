@@ -1,0 +1,31 @@
+[almalinuxe@localhost ~]$ df -kh
+Filesystem                  Size  Used Avail Use% Mounted on
+devtmpfs                    4.0M     0  4.0M   0% /dev
+tmpfs                       3.8G     0  3.8G   0% /dev/shm
+tmpfs                       1.5G   11M  1.5G   1% /run
+/dev/mapper/almalinux-root   35G  4.1G   31G  12% /
+/dev/nvme0n1p1             1014M  293M  722M  29% /boot
+tmpfs                       767M  112K  766M   1% /run/user/1000
+[almalinuxe@localhost ~]$ uname -a
+Linux localhost.localdomain 5.14.0-284.11.1.el9_2.x86_64 #1 SMP PREEMPT_DYNAMIC Tue May 9 05:49:00 EDT 2023 x86_64 x86_64 x86_64 GNU/Linux
+[almalinuxe@localhost ~]$ cat /etc/os-release
+NAME="AlmaLinux"
+VERSION="9.2 (Turquoise Kodkod)"
+ID="almalinux"
+ID_LIKE="rhel centos fedora"
+VERSION_ID="9.2"
+PLATFORM_ID="platform:el9"
+PRETTY_NAME="AlmaLinux 9.2 (Turquoise Kodkod)"
+ANSI_COLOR="0;34"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:almalinux:almalinux:9::baseos"
+HOME_URL="https://almalinux.org/"
+DOCUMENTATION_URL="https://wiki.almalinux.org/"
+BUG_REPORT_URL="https://bugs.almalinux.org/"
+
+ALMALINUX_MANTISBT_PROJECT="AlmaLinux-9"
+ALMALINUX_MANTISBT_PROJECT_VERSION="9.2"
+REDHAT_SUPPORT_PRODUCT="AlmaLinux"
+REDHAT_SUPPORT_PRODUCT_VERSION="9.2"
+
+echo "Welcome to Alma Linux 9.2 in VMware 17"

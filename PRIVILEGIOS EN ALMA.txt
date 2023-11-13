@@ -1,0 +1,72 @@
+creacion de usuarios en ALMALINUX
+
+ver si esta funcionado el servicio ssh 
+
+systemctl status sshd
+crear un usuario
+useradd prueba
+passwd prueba
+prueba (es la contraseña)
+dnf install net-tools -y (dnf es la libreria de red hat)
+vi /etc/ssd/sshd_config
+
+despues poner escape :
+:se nu
+
+en la linea 44 añadir presionando la letra i
+AllowUsers prueba
+
+despues guardar con escape
+:wq!
+systemctl restart sshd
+despues ingresar a putty con la ip que se 
+
+su - (para entrar como usuario root)
+
+despues crear dos usuarios mas 
+
+visudo (es un archivo )
+&&&despues ir a la seccion de comandos despues de ALL=ALL teclear i
+prueba ALL=(ALL)     ALL
+escape teclear
+:wq!
+
+despues ejecutar el comando
+sudo dnf install -y nano
+despues requiere la clave de prueba que es prueba
+
+which useradd
+sudo dnf install tar
+despues
+yes
+
+which tar
+
+
+ingresar a root
+visudo
+prueba1 ALL=(ALL) /usr/bin/tar/, /usr/sbin/useradd, /usr/bin/tar
+
+despues guaradar 
+escape :wq!
+sudo nano /etc/ssh/sshd_config
+AllowsUser prueba2
+salir
+
+sudo systemctl restart sshd
+
+
+despues ingresar con el usuario prueba2
+sudo top
+control c para salir
+ps -aux | grep ssh (me  permite ver los procesos)
+sudo passwd prueba
+
+
+añadir un usuario y que no sea necesario poner sudo
+
+puede
+borrar usuarios
+chmod
+cchom cambiar propietario
+y que me deje ejecutar systemctl sin el sudo para todos

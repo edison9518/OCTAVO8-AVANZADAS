@@ -1,0 +1,184 @@
+------------------------------------------------------------------
+CLASE 5
+=================================================================
+instalacion de Docker
+
+
+https://phoenixnap.com/kb/how-to-install-docker-on-centos-8
+
+
+sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+
+sudo dnf install docker-ce --nobest
+
+docker pull ubuntu
+docker pull ubuntu:xxxxx
+
+
+docker images
+docker inspect ubuntu
+
+para correr la maquina
+ docker run ubuntu echo "hello world"
+
+contenedores
+
+
+docker ps
+
+
+
+maquinas apagadas reviso los contenedores que se crearon o las plantillas de la imagen que me descargue 
+docker ps -a
+
+docker run --name edison1 ubuntu echo "hellow world"
+
+
+que exista una interaccion la maquina
+docker run -it ubuntu /bin/bash
+
+
+ver la version de ubuntu
+ cat /etc/lsb-release
+
+
+conectarme a un contenedor que este conectado 
+ docker exec -it d78e7dd945ae /bin/sh
+todos los contenedores tienen como usuario root
+
+whoami
+para ejecutar la maquina especificada\
+
+
+docker exec -it d78e7dd945ae /bin/sh
+
+instalar 
+apt-get update 
+
+
+
+ver la imagen creada de crear imagenes ///////////////////////
+creando nuevos contenedores
+
+AHI LE ESTOY DANDO EL NOMBRE DE LA IMGEN EL TAG
+docker commit -m "git" -a "edison" d78e7dd945ae git/ubuntu:v1
+
+
+
+creando contenerdores a partir de una imagen 
+docker run -it --name git/ubuntu:v1
+
+
+
+docker images
+docker run -it --name GIT git/ubuntu:v1 /bin/bash
+
+para ver la smaquinas creadas
+
+dpkg -l | grep git
+
+salimos del contenedor
+exit
+
+
+instalar apache2 ====================================================
+apt-get update
+apt-get install apache2 -y
+systemctl status apache2
+service apache2 status
+service apache2 start
+
+
+ docker commit -m "install apache" -a "USER1" 19b6d68ddb4a  apache/ubuntu:v1
+
+docker images
+
+
+contenedor en background y el servicio no se detiene
+docker run -d --name server apache/ubuntu:v1 /usr/sbin/apache2ctl -D FOREGROUND
+
+D PARA QUE EL SERVICIO NO SE DETENGA 
+Y LA d minuscula para que el contenedor funcione en segundo plano 
+
+docker ps
+docker ps server
+docker --help
+
+
+arancar el intereprete de comandos intercativo
+docker exec -it server /bin/sh 
+top
+
+instalamos dentro del contenedor ====================
+apt-get install curl
+
+comando para correr lo que es CURL 
+curl http://127.0.0.1
+
+
+PARA MA[EAR PUERTOS //// exponer servicio 
+docker run -d -p 8000:80 --name server apache/ubuntu:v1 /usr/sbin/apache2ctl -D FOREGROUND
+
+docker stop server
+docker ps -a
+docker rm server
+
+docker run -d -p 8000:80 --name server apache/ubuntu:v1 /usr/sbin/apache2ctl -D FOREGROUND
+
+PARA INGRESAR AL CONTENEDOR Y PODER APAGAR 
+docker exec -it server /bin/sh
+service apache2 stop
+
+docker ps -a
+docker run -d -p 8000:80 --name server apache/ubuntu:v1 /usr/sbin/apache2ctl -D FOREGROUND
+
+docker network ls''''''''' para ver la sredes 
+
+
+
+
+tarabajo de consulta 
+dos docker   
+los respaldos se hace con el crontab
+que la maquina se pague tal tiempo cada 5 minutos creado archivos bash
+
+ 
+
+
+docker compose 
+dockerfile 
+la practica mas el informe 
+individual 
+
+
+MANEJO DE KUBERNETS 
+puedo gestionar contenedor  y generar 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

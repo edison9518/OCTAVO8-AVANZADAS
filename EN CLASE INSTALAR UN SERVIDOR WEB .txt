@@ -1,0 +1,70 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+CLASE 6 
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ssh-keygen
+enter 
+frase
+comunicaciones y avanzadas   es la frase
+cat id_rsa.pub >> authorize_keys
+chmod 777 authorize_keys
+sudo nano /etc/ssh/sshd_config
+cd .ssh
+
+
+scp prueba@192.168.149.131:/home/prueba/.ssh/id_rsa C:\Users\Public\Downloads
+
+
+/home/prueba/.ssh/id_rsa
+
+
+reiniciamos 
+
+
+
+y abrimos con puttygem 
+ en gem 
+ponemos la frase 
+save private key 
+
+
+ y nos conectamos a traves de esa clave privada
+-------------------------------------------------------------------------
+
+///===USUARIO==VICTOR====
+=======Clave public and priv
+ssh-keygen
+//holamundo
+ls -l .ssh  	//pass public and pri (rsa rsa
+
+cd .ssh
+ls -la
+cd .ssh
+cat id_rsa.pub >> authorize_keys
+chmod 755 authorize_keys
+chmod 777 id_rsa
+
+##################POWERSHELL PC###############
+
+cd victor@192.168.11.14:/home/victor/.ssh/id_rsa C:\Users\victo\Documents\
+
+##################################################
+sudo nano /etc/ssh/sshd_config
+#//
+passwordauthentication no
+#//
+sudo systemctl restart sshd
+
+!!!!!!!!!!!!!!!!!!==PC==!!!!PUTTYGEN!!!!!!!!!!!!!!!!!!!
+load 			// seleccionas el rsa y pones la frase
+save private key
+!!!!!!!!!!!!!!!!!!!!!
+
+========PUTTY==========
+SSH/AUTH/Credentials
+=======================
+
+
+
+
+
+

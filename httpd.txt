@@ -1,0 +1,126 @@
+
+
+//epel-release sirve para que tome paquetes  desde ese repositorio
+
+//SERVICIO DE APACHE 
+
+dnf install -y httpd mod_ssl
+
+systemctl status httpd
+systemctl start httpd
+systemctl enable hattpd
+
+regla de firewall
+
+=================
+
+dnf install mariadb-service -y
+systemctl status mariadb
+systemctl start mariadb
+systemctl status mariadb
+systemctl enable mariadb
+=========================
+mysql_secure_installation
+..
+(darle enter donde dice algo de none)
+..
+------------SECCION DE YES O NO-------------
+yes
+yes	(INGRESAN PASSWORD PARA LA BASE DE DATOS en phpmyadmin)....el usuario es root..
+yes
+No
+Yes
+Yes
+-------------------------------
+mysql -u root -p
+//clave de mariadb
+
+
+====================PHP============
+dnf yum install php php-mysqlnd -y
+
+systemctl restart httpd
+			// funciones orientadas al modulo de php
+############CREAR PAGIINA EN PHP#########
+cd var/www/html			//AQUI SE GUARDAN LAS PAGINAS 
+nano etc/httpd/conf/httpd.conf	  //AQUI configuro los archivos http o donde se van a guardar
+nano info.php
+-------------------
+<?php
+phpinfo();
+?>
+--------------------
+systemctl restart httpd 	(ingresas al navegador con tu IP) <http://192.168.11.14>
+
+dnf install phpmyadmin -y
+cd /etc/httpd/conf.d
+ls
+cp phpMyAdmin.conf phpMyAdmin_respaldo
+rm phpMyAdmin.con
+y
+nano phpMyAdmin.conf
+----------------------phpMyAdmin.conf------------------------
+
+Alias /phpMyAdmin /usr/share/phpMyAdmin
+Alias /phpmyadmin /usr/share/phpMyAdmin
+<Directory /usr/share/phpMyAdmin/>
+   AddDefaultCharset UTF-8
+   <IfModule mod_authz_core.c>
+     # Apache 2.4
+     <RequireAny>
+      Require all granted
+     </RequireAny>
+   </IfModule>
+   <IfModule !mod_authz_core.c>
+     # Apache 2.2
+     Order Deny,Allow
+     Deny from All
+     Allow from 127.0.0.1
+     Allow from ::1
+   </IfModule>
+</Directory>
+<Directory /usr/share/phpMyAdmin/setup/>
+   <IfModule mod_authz_core.c>
+     # Apache 2.4
+     <RequireAny>
+       Require all granted
+     </RequireAny>
+   </IfModule>
+   <IfModule !mod_authz_core.c>
+     # Apache 2.2
+     Order Deny,Allow
+     Deny from All
+     Allow from 127.0.0.1
+     Allow from ::1
+   </IfModule>
+</Directory>
+-------------------------------------------
+systemctl restart httpd
+
+
+
+cd /var/www/html
+mkdir descargas
+cd descargas
+touch file.txt
+
+	(ingresas a tu navegador con ip y la carpeta descargas)
+		http://192.168.11.14/descargas
+
+============AQUI MANDA DEBER=====================
+CONSULTAR DE .HTACCES Y configurar la seguridad donde me pida clave para ingresar a los archivos
+la clave esta enlazada con los usuarios en el sistema.
+
+
+Autentication PAM
+
+VIRTUAL HOST 
+	generar dos paginas diferentes
+		-nombre y apellido
+		-nombre segundo apallido segundo
+	//difentes dominios con la misma direccion IP
+
+
+
+
+

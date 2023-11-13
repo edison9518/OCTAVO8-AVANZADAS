@@ -1,0 +1,76 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+CREAR UNA PAGINA CON HTTPD CON  HTTPD ACCESS
+--------------------------------------------------------------------
+
+r (lectura) =====4.
+w (escritura) =====2.
+x (ejecución) ==========1.
+
+
+cd /var/www/html/descargas
+cd descargas/ ruta que se desea proteger
+
+sudo htpasswd -c /etc/httpd/.htpasswd david
+david18
+david18
+sudo nano /var/www/html/descargas/.htaccess
+
+AuthType Basic
+AuthName "Área protegida"
+AuthUserFile /etc/httpd/.htpasswd
+Require valid-user
+
+sudo chmod 644 /var/www/html/descargas/.htaccess
+sudo chmod 644  /etc/httpd/.htpasswd
+
+sudo nano /etc/httpd/conf/httpd.conf
+<Directory /var/www/html/descargas>
+    AllowOverride All
+</Directory>
+
+
+sudo systemctl restart httpd
+http://192.168.149.137/descargas/
+
+
+
+--------------------------------------------------------------------
+HOST VIRTUALES 
+--------------------------------------------------------------------
+sudo setenforce 0
+getenforce
+mkdir -p /var/www/edisonyugcha.com/html
+mkdir -p /var/www/davidrubio.com/html
+chown -R apache:apache /var/www/edisonyugcha.com/
+chown -R apache:apache /var/www/davidrubio.com/
+chmod -R 755 /var/www/
+sudo nano /var/www/edisonyugcha.com/html/index.html
+ESTA ES MI PRIMERA PAGINA WEB 
+sudo nano /var/www/davidrubio.com/html/index.html
+ESTA ES MI SEGUNDA PAGINA WEB
+
+sudo nano /etc/httpd/conf/httpd.conf
+
+-----------------------------
+<Virtualhost *:80>
+	  ServerName www.edisonyugcha.com
+	  ServerAlias edisonyugcha.com
+	  DocumentRoot /var/www/edisonyugcha.com/html
+        ErrorLog /var/www/edisonyugcha.com/error.log
+        CustomLog /var/www/edisonyugcha.com/request.log combined
+</VirtualHost>
+
+<VirtualHost *:80>
+        ServerName www.davidrubio.com
+	  ServerAlias davidrubio.com
+	  DocumentRoot /var/www/davidrubio.com/html
+        ErrorLog /var/www/davidrubio.com/error.log
+        CustomLog /var/www/davidrubio.com/request.log combined
+</VirtualHost>
+
+
+windows
+worpad como administrador
+C:\Windows\System32\drivers\etc\
+agregar la ip con los dominios
+192.168.116.130 www.alexcalle09.com www.romarioastudillo09

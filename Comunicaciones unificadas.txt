@@ -1,0 +1,224 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+CLASE 1
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Comunicaciones unificadas
+Integradas para optimizar los procesos en las empresas
+Comprender las difernetes formas y herramientas de comunicacuion 
+
+
+Para que me s
+INVESTIGACIOND E DIFERENTES TIPOS DE COMUNICACIONES UNIFICADAS QUE EXISTEN ¿??
+Instalar el iso de alma Linux para el lunes
+
+buscar uns software que integraba mensajes instantaneos 
+como esta funcionando los elementos 
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+CLASE 2
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+MODELOS DE IMPLEMENTACION DE SERVICIOS
+*+BANE METAL
+*VIRTUAL MACHINES
+*CONTAINER-BASED INFRAESTRUCTURE
+*SERVERLESS COMPUTING		sin servidor
+
+
+BARE METAL
+
+*implemntacion completa esecialemnte en una compitadora real directamente en la computadora como sistema primario 
+
+*directamente al sistema operatio y al hardaware
+*situaciones que requieren acceso a hardware para aplicaciones de compuacion de alto rendiemiento
+*para alojar viryualiaacion y los marcos de la nube vmware software
+
+openstack
+  
+poner una distro como alma linux version libre donde la comunidad va colocando informacion
+o si no poner una redhat pagada teniendo un soporte actualiazciones 
+
+
+VIRTUAL MACHINES
+
+*cp,partenm recursos del host es una computadora dentro de otro sistema operativo
+*es un software que crea y administra maquinas vittuales
+*las maquinas virtuales se ejecutan sobre un hipervisor que proporciona a la smaquinas virtuales hardware simulando o acceso controlado al hwardare fiscio y subyacente
+
+hipervisores......... virtual box..... vmware.....kvm ((((ESXi)))))
+
+
+en linux ocupa todo el kernel mientras que en windows necesita separar cierta cantidad d ememoria ram
+
+
+tecnologia conocida como docker
+podman esta creada por redhat  
+
+
+SERVERLESS COMPUTING
+*aprovecha una tendencia moderna hacia aplicaciones que se basan en servicios . aplicacion realia una llamada a otro programma o carga de trabajo para realizar una tarea en particular para crear un entorno en las cuales esten disponibles
+
+paso 1.. desarrollador crea una aplicacion 
+
+paso2 .. implementa la apliacion como un contenedor
+
+paso 3.. el desarrollador implementa ese contenedor en un proveedor de computacion sin servidor, incluye una especificacions de cuanto tiempo debe permanecer inactiva la funcion antes de que de desactive
+
+paso 4.. cuando es necesario la aplicacion llama a la funcion
+
+paso5.. el proveedor genera una instancia del contenedor realiza la tarea necesaria y devuelve el resultado.
+
+
+On Premise donde yo hago todo
+IaaS contrato un espacio para un servidor en la nube solo levanto la maquina virtual 
+PaaS	aplicaciones para contratar matlab pongo y ellos desarrollan Labview plataforma como servicio     visual estudio 
+SaaS	SOFTWARE  como servicio lo unico que s ehace es pagar COMO ALEXA o conocido coo XSAAS
+
+PRIVATE CLOUD 
+*proporciona aprosionamiento de autoservicio para recurso informaticos redes y alamacenamiento
+*la organizacion controla todos los recursos
+*esta ubicada en un centro de datos
+
+PUBLIC CLOUD
+*LO ADMINISTRA UN PROVEEDOR DE NUBE PUBLICA
+*SE CONOCE COMO EL PROBLEMA DEL VECINO RUIDOSO
+*ES UTIL PARA ESCALAR CIRTUALEMNTE SIEMPRE QUE LA CARGA LO REQUIERA Y LUEGO ESALAR CUANDO EL TRAFICO ES LENTO.
+
+HYBRID CLOUD
+*Es la combinacion de dos tipos diferentes de nubes 
+*se utiliza para unir una nube privada y una nube publica dentro de una sola aplicacion
+*combina la nube publica y la privada para proporcionar recursos y seguridad adicionales cuando sea neesario 
+
+
+EDGE CLOUD
+*nando popularidad debido al crecimeinto de internet de las osas IOT
+*comprende una o mas nubes centrales que atuan como un centro para las propias nubes perimetrales
+*se ejecuta en hardware mucho ma spequeño y pueden tener mas recursos limitados 
+
+
+
+
+ACTUALIZAR EL SISTEMA 
+sudo dnf update -y
+sudo dnf install epel-release -y
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+CLASE 3
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+systemctl status sshd
+al moemnto de iniciar la maquina poner enable
+
+creacion de usuarios en ALMALINUX
+
+ver si esta funcionado el servicio ssh 
+
+systemctl status sshd
+crear un usuario
+useradd prueba
+passwd prueba
+prueba (es la contraseña)
+
+para ver los usuarios creados 
+cat /etc/paswd
+
+para eliminar los uusuarios creados 
+sudo userdel prueba
+
+para eliminar desde el direcotrio creado
+sudo userdel -r prueba
+
+dnf install net-tools -y (dnf es la libreria de red hat)
+vi /etc/ssh/sshd_config
+
+despues poner escape :
+:se nu
+
+en la linea 44 añadir presionando la letra i
+AllowUsers prueba
+
+despues guardar con escape
+:wq!
+
+para salir sin guardar 
+:q!
+
+systemctl restart sshd
+despues ingresar a putty con la ip que se 
+
+su - (para entrar como usuario root)
+
+despues crear dos usuarios mas 
+
+visudo (es un archivo )
+&&&despues ir a la seccion de comandos despues de ALL=ALL teclear i
+prueba ALL=(ALL)     ALL
+escape teclear
+:wq!
+
+despues ejecutar el comando
+sudo dnf install -y nano
+despues requiere la clave de prueba que es prueba
+
+which useradd
+sudo dnf install tar
+despues
+yes
+
+which tar
+
+
+ingresar a root
+visudo
+prueba1 ALL=(ALL) /usr/bin/tar/, /usr/sbin/useradd, /usr/bin/tar
+
+despues guaradar 
+escape :wq!
+sudo nano /etc/ssh/sshd_config
+AllowsUser prueba2
+salir
+
+sudo systemctl restart sshd
+
+
+despues ingresar con el usuario prueba2
+
+para ver los procesos
+sudo top
+control c para salir
+ps -aux | grep ssh (me  permite ver los procesos)
+
+para cambiar la contrase;a de un usuario
+sudo passwd prueba
+
+
+añadir un usuario y que no sea necesario poner sudo
+
+puede
+borrar usuarios
+chmod
+cchom cambiar propietario
+y que me deje ejecutar systemctl sin el sudo para todos
+ 
+deber borrar usuario dar permisos 
+cambiar de propietario cchon 
+permita manejar el ifconfig
+
+which systemctl 
+que te permita ejecutar el systemctl sin ejecutar el sudo 
+
+
+
+para un usuario que no tenga que utilizar el sudo 
+sudo usermod -aG sudo usuario
+
+para borrar usuario 
+sudo userdel xxxxxx
+
+
+
+
+
+
+
+

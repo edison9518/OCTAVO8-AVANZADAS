@@ -1,0 +1,102 @@
+¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
+MIERCOLES 01/11/2023
+'''''''''''''''''''''''''''''''''''''''''''''''''''
+SISTEMA DE CONTROL VERSIONES
+formar de administar los cambios en un conjnto de archivos para mantener un historial de esos cambios 
+-habilita ala colaboraion
+-rsponsabilidad y visibilidad
+-trabajar de forma aislada
+-seguridad
+-trabjar en cualquier lugar
+
+
+
+
+
+EXISTEN 3 TIPOS
+LOCAL
+CENTRALIZADO
+DISTRIBUIDAD
+
+
+
+
+LOCAL
+UTILIZA UNA BASE DE DATOS SIMPLE PARA REALIZAR UN SEGUIMIENTO DE TODOS LOS CAMBIOS EN EL ARCHIVO 
+ALAMACENA UN ARCHIVO DE CAMBIOS DELTA ENTRE LAS VERSIONES
+
+
+
+
+CENTRALIZADO 
+UTILIZA UN MODELO DE SERVIDOR-CLIENTE
+EL REPOSITORIO SE ALMACENA EN UNA UBICACION CENTRALIZADA EN UN SERVIDOR 
+UNA SOLA VEZ A ALA VEZ
+
+
+
+
+DISTRIBUIDO 
+
+BAJA UNA VERSION A ASU MAQUINA LOCAL REALIZANDO LA SMODIFCACIONE SY SUBIR AL SERVIDOR DE ALOJAMIENTO  
+
+
+
+HERRAMIENTAS ---------------------------------
+GIT es una herramienta de cofigo abierto para sistema de control de versiones se puede instalar en cualqueir sietema operativo que tengamos 
+alamcena los datos como instantanesos 
+
+
+esta organizado por 3 etapas y 3 estados 
+
+ETAPAS
+REPOSITORIO EL DIRECTORIO GIT
+DIRECTORIO DE TRABAJO 
+AREA DE ENSAYO
+
+
+
+ESTADOS 
+COMMITED  crear
+MODIFIED	modificado 
+STAGED
+
+
+
+
+traabajr en forma local y forma remota
+local se almacena en el sistema de archivos de una maquina cliente que e sla misma en la que se ejecutan lso comandos git
+
+
+remoto se lamcena en otro lugar 
+
+
+BRANCHING RAMAS 
+permite a los usuarios trabjar de forma independiente sin afectar al codigo principal  
+el codigo se coloca automaticamente en una rama laamada master
+
+
+es liviana y el cambio entre ramas es casi instantaneo 
+cuando un usuario pasa d euna rama a otra 
+
+
+
+
+
+GITHUB Y OTROS PROOVEDDORES
+ GIT Y GITHUB NO SON LO MISMO  y proporciona una interfaz de liena de comandos.
+Git es una implemtancion de control de versione sdistribuido 
+GitHUb es un servicio proporcionado por Microfot que implementa un servicio de alojamiento de repositorio scon GIt 
+
+
+INSTALR DENTRO D ELA SMAQUINAS DE LINUX
+ 
+
+
+practica parasr archivos del local hacia github
+en modo comando se va todo el archivo en modo remoto y pasar el repositorio con un amigo 
+
+
+
+
+
